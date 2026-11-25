@@ -50,7 +50,7 @@ export default function ResetPasswordScreen() {
       kicker="ACCOUNT RECOVERY"
       title={success ? "You’re all set." : "Choose a new password."}
       subtitle={
-        success ? "Your password has been changed." : "Make it at least 6 characters long."
+        success ? "Your password has been changed." : "Make it at least 8 characters long."
       }
     >
       {success ? (
@@ -66,8 +66,8 @@ export default function ResetPasswordScreen() {
               autoComplete="new-password"
               value={newPassword}
               onChange={(event) => setNewPassword(event.target.value)}
-              placeholder="At least 6 characters"
-              minLength={6}
+              placeholder="At least 8 characters"
+              minLength={8}
               required
             />
           </label>
@@ -79,7 +79,7 @@ export default function ResetPasswordScreen() {
               value={confirmPassword}
               onChange={(event) => setConfirmPassword(event.target.value)}
               placeholder="Enter it again"
-              minLength={6}
+              minLength={8}
               required
             />
           </label>

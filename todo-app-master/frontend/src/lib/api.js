@@ -11,11 +11,13 @@ export async function request(path, { token, ...options } = {}) {
   });
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error(result.message || "Something went wrong. Please try again.");
+    const error = new Error(result.message || "Something went wrong. Please try again.");
+    error.status = response.status;
+    throw error;
   }
   return result;
 }
 
 export function isAuthError(error) {
-  return /token|unauthorized/i.test(error.message);
+  return error?.status === 401 || /token|unauthorized/i.test(error?.message || "");
 }
