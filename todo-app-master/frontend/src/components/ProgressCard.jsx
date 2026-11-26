@@ -10,7 +10,7 @@ export default function ProgressCard({ counts }) {
         </strong>
         <span>
           {counts.all
-            ? `${counts.completed} of ${counts.all} tasks completed today`
+            ? `${counts.completed} of ${counts.all} tasks completed`
             : "A fresh page. What would you like to get done?"}
         </span>
       </div>

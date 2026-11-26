@@ -5,11 +5,11 @@ const notFound = (res) => res.status(404).json({ message: "todo not found" });
 
 // create todo
 export const createTodo = async (req, res) => {
-    const { error } = todoValidation(req.body);
+    const { error, value } = todoValidation(req.body);
     if (error) return res.status(400).json({ message: error.details[0].message });
     const todo = await Todo.create({
-        title: req.body.title,
-        description: req.body.description,
+        title: value.title,
+        description: value.description,
         userId: req.userId
     });
     return res.status(201).json({ message: "Todo created successfully", todo });
@@ -39,12 +39,12 @@ export const getTodo = async (req, res) => {
 // update todo
 export const updateTodo = async (req, res) => {
     if (!mongoose.isValidObjectId(req.params.id)) return notFound(res);
-    const { error } = todoUpdateValidation(req.body);
+    const { error, value } = todoUpdateValidation(req.body);
     if (error) return res.status(400).json({ message: error.details[0].message });
 
     const todo = await Todo.findOneAndUpdate(
         { _id: req.params.id, userId: req.userId },
-        req.body,
+        value,
         { new: true }
     );
     if (!todo) return notFound(res);

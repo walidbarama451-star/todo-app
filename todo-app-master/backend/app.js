@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import dotenv from "dotenv";
 import connectDB from "./connectDB.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -7,13 +8,19 @@ import todoRoutes from "./routes/todoRoutes.js";
 
 dotenv.config();
 
+if (!process.env.JWT_SECRET_KEY) {
+  console.error("JWT_SECRET_KEY is required");
+  process.exit(1);
+}
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 if (process.env.TRUST_PROXY) app.set("trust proxy", Number(process.env.TRUST_PROXY));
 
+app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: process.env.FRONTEND_URL || "http://localhost:5174",
   credentials: true
 }));
 

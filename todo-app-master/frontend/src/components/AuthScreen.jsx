@@ -112,8 +112,8 @@ export default function AuthScreen({ onAuthenticated }) {
               autoComplete={mode === "login" ? "current-password" : "new-password"}
               value={form.password}
               onChange={updateField("password")}
-              placeholder="At least 8 characters"
-              minLength={8}
+              placeholder={mode === "register" ? "At least 8 characters" : "Your password"}
+              minLength={mode === "register" ? 8 : undefined}
               required
             />
           </label>

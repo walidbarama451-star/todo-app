@@ -19,11 +19,19 @@ export const register = async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-  const newUser = await User.create({
-    username: req.body.username.trim(),
-    email,
-    password: hashedPassword
-  });
+  let newUser;
+  try {
+    newUser = await User.create({
+      username: req.body.username.trim(),
+      email,
+      password: hashedPassword
+    });
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+    throw err;
+  }
 
   const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: "1d" });
   return res.status(201).json({
@@ -66,7 +74,7 @@ export const forgetPassword = async (req, res) => {
       user.resetTokenExpires = new Date(Date.now() + 30 * 60 * 1000);
       await user.save();
 
-      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5174";
       const resetUrl = new URL("/reset-password", frontendUrl);
       resetUrl.searchParams.set("token", resetToken);
 

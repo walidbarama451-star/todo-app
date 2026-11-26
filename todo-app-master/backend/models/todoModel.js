@@ -25,8 +25,8 @@ schema.index({ userId: 1, _id: -1 });
 
 const todoValidation = (obj) => {
     const schema = joi.object({
-        title: joi.string().required(),
-        description: joi.string().required(),
+        title: joi.string().trim().max(120).required(),
+        description: joi.string().trim().max(1000).required(),
         status: joi.boolean().default(false)
     });
     return schema.validate(obj);
@@ -34,8 +34,8 @@ const todoValidation = (obj) => {
 
 const todoUpdateValidation = (obj) => {
     const schema = joi.object({
-        title: joi.string(),
-        description: joi.string(),
+        title: joi.string().trim().max(120),
+        description: joi.string().trim().max(1000),
         status: joi.boolean()
     });
     return schema.validate(obj);

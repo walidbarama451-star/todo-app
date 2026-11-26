@@ -22,6 +22,7 @@ A calm, full-stack todo application designed around a simple idea: **make room f
 | **JSON Web Tokens** | Stateless authentication for protected todo routes |
 | **bcrypt** | Native password hashing (cost factor 12) |
 | **Joi** | Request payload validation |
+| **Helmet** | HTTP security headers (`X-Content-Type-Options`, `HSTS`, etc.) |
 | **Nodemailer** | Password-reset emails |
 | **express-rate-limit** | Rate limiting for sensitive auth endpoints |
 | **cors** | Cross-Origin Resource Sharing middleware |
@@ -101,7 +102,7 @@ A calm, full-stack todo application designed around a simple idea: **make room f
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 20.19+
 - MongoDB (local instance or an Atlas connection string)
 
 ### 1. Backend
@@ -122,7 +123,7 @@ Configure your `.env` file:
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/daymark
 JWT_SECRET_KEY=your-secret-key
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:5174
 
 # Optional: set to 1 when deployed behind a reverse proxy (Render, Railway, Nginx)
 # TRUST_PROXY=1
@@ -152,7 +153,7 @@ npm install
 npm run dev
 ```
 
-Vite serves the app on `http://localhost:5173` and proxies `/api` to `http://localhost:5000` (see `vite.config.js`). To point at another API, set `VITE_API_URL` in a `.env` file.
+Vite serves the app on `http://localhost:5174` and proxies `/api` to `http://localhost:5000` (see `vite.config.js`). To point at another API, set `VITE_API_URL` in a `.env` file.
 
 ### Production build
 
