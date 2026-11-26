@@ -70,15 +70,13 @@ export const forgetPassword = async (req, res) => {
       const resetUrl = new URL("/reset-password", frontendUrl);
       resetUrl.searchParams.set("token", resetToken);
 
-      try {
-        await sendEmail(
-          user.email,
-          "Reset your password",
-          `Use this link to reset your password within 30 minutes:\n\n${resetUrl.toString()}`
-        );
-      } catch (emailError) {
-        console.error("Email send failed (account recovery still generated):", emailError.message);
-      }
+      sendEmail(
+        user.email,
+        "Reset your password",
+        `Use this link to reset your password within 30 minutes:\n\n${resetUrl.toString()}`
+      ).catch((emailError) => {
+        console.error("Email send failed:", emailError.message);
+      });
     }
 
     return res.status(200).json({ message: "If an account exists for that email, we sent a password reset link." });

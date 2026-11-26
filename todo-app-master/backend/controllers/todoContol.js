@@ -17,14 +17,14 @@ export const createTodo = async (req, res) => {
 
 // get all my todos
 export const getAllTodo = async (req, res) => {
-    const limit = req.query.limit ? parseInt(req.query.limit, 10) : undefined;
-    const skip = req.query.skip ? parseInt(req.query.skip, 10) : undefined;
+    const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 200, 1), 500);
+    const skip = Math.max(parseInt(req.query.skip, 10) || 0, 0);
 
-    let query = Todo.find({ userId: req.userId }).sort({ _id: -1 }).lean();
-    if (skip !== undefined && !isNaN(skip)) query = query.skip(skip);
-    if (limit !== undefined && !isNaN(limit)) query = query.limit(limit);
-
-    const todos = await query;
+    const todos = await Todo.find({ userId: req.userId })
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean();
     return res.status(200).json(todos);
 };
 

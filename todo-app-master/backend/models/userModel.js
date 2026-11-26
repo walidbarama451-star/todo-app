@@ -16,8 +16,7 @@ const schema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
-        minlength: 8
+        required: true
     },
     resetTokenHash: {
         type: String,
@@ -41,7 +40,7 @@ const registerValidation = (obj) => {
 const loginValidation = (obj) => {
     const schema = joi.object({
         email: joi.string().email().trim().lowercase().required(),
-        password: joi.string().min(8).required()
+        password: joi.string().required()
     });
     return schema.validate(obj);
 };

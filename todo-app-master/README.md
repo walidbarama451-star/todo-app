@@ -124,6 +124,9 @@ MONGO_URI=mongodb://localhost:27017/daymark
 JWT_SECRET_KEY=your-secret-key
 FRONTEND_URL=http://localhost:5173
 
+# Optional: set to 1 when deployed behind a reverse proxy (Render, Railway, Nginx)
+# TRUST_PROXY=1
+
 # Email / SMTP configuration
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
